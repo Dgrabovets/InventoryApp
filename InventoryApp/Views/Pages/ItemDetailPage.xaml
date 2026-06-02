@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="InventoryApp.Views.Pages.ItemDetailPage"
+             Title="Предмет"
+             BackgroundColor="{StaticResource AppBg}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="14">
+
+            <Label Text="Сейчас в базе"
+                   FontSize="13"
+                   TextColor="{StaticResource AppMuted}" />
+            <Label x:Name="LocationSummaryLabel"
+                   FontSize="14"
+                   TextColor="{StaticResource AppText}"
+                   LineBreakMode="WordWrap" />
+
+            <Label Text="Фотографии"
+                   FontSize="13"
+                   TextColor="{StaticResource AppMuted}" />
+            <VerticalStackLayout x:Name="PhotosHost" Spacing="10" />
+            <Button Text="Добавить фото"
+                    Clicked="OnAddPhotoClicked" />
+
+            <Label Text="Название *"
+                   FontSize="13"
+                   TextColor="{StaticResource AppMuted}" />
+            <Entry x:Name="NameEntry" />
+
+            <Label Text="Описание"
+                   FontSize="13"
+                   TextColor="{StaticResource AppMuted}" />
+            <Editor x:Name="DescriptionEditor"
+                    AutoSize="TextChanges"
+                    MinimumHeightRequest="72" />
+
+            <Label Text="Количество"
+                   FontSize="13"
+                   TextColor="{StaticResource AppMuted}" />
+            <Entry x:Name="QuantityEntry" Keyboard="Numeric" Text="1" />
+
+            <Label Text="Категория"
+                   FontSize="13"
+                   TextColor="{StaticResource AppMuted}" />
+            <Picker x:Name="CategoryPicker" Title="Категория" />
+
+            <Label Text="Заметки о месте"
+                   FontSize="13"
+                   TextColor="{StaticResource AppMuted}" />
+            <Editor x:Name="LocationNotesEditor"
+                    AutoSize="TextChanges"
+                    MinimumHeightRequest="60"
+                    Placeholder="Необязательно" />
+
+            <Label Text="Переместить в комнату"
+                   FontSize="13"
+                   TextColor="{StaticResource AppMuted}" />
+            <Picker x:Name="MoveRoomPicker"
+                    Title="Оставьте «Не менять», чтобы только обновить поля" />
+
+            <ActivityIndicator x:Name="Busy"
+                               Color="{StaticResource Primary}"
+                               IsRunning="False"
+                               IsVisible="False" />
+
+            <Button Text="Сохранить"
+                    Clicked="OnSaveClicked" />
+
+            <Button Text="Удалить из учёта"
+                    BackgroundColor="{StaticResource AppWarning}"
+                    Clicked="OnDeleteClicked" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

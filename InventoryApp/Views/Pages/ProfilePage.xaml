@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="InventoryApp.Views.Pages.ProfilePage"
+             Title="">
+
+    <RefreshView x:Name="Refresh" Refreshing="OnRefreshing">
+        <ScrollView>
+            <VerticalStackLayout Padding="20" Spacing="16">
+
+                <Label Text="Локальный профиль"
+                       Style="{StaticResource Headline}"
+                       FontSize="24"
+                       HorizontalTextAlignment="Start" />
+                <Label Text="Только просмотр: без смены пароля и редактирования."
+                       FontSize="14"
+                       TextColor="{StaticResource AppMuted}" />
+
+                <Border Stroke="{StaticResource Gray600}" StrokeThickness="1"
+                        BackgroundColor="{StaticResource AppCard}" Padding="16"
+                        StrokeShape="RoundRectangle 12">
+                    <VerticalStackLayout Spacing="10">
+                        <HorizontalStackLayout Spacing="8">
+                            <Label Text="Пользователь:" WidthRequest="140" TextColor="{StaticResource AppMuted}" />
+                            <Label x:Name="UsernameLabel" FontAttributes="Bold" />
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout Spacing="8">
+                            <Label Text="Роль:" WidthRequest="140" TextColor="{StaticResource AppMuted}" />
+                            <Label x:Name="RoleLabel" />
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout Spacing="8">
+                            <Label Text="Последняя активность:" WidthRequest="140" TextColor="{StaticResource AppMuted}" />
+                            <Label x:Name="LastActivityLabel" />
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+                </Border>
+
+                <Label Text="Резервные копии"
+                       FontSize="18"
+                       FontAttributes="Bold"
+                       TextColor="{StaticResource AppText}" />
+                <Label Text="Укажите папку — туда будут сохраняться ZIP с базой и фото. При включённой автокопии архив создаётся при закрытии приложения (Android: смахивание из списка недавних; Windows/Mac: закрытие окна)."
+                       FontSize="13"
+                       TextColor="{StaticResource AppMuted}"
+                       LineBreakMode="WordWrap" />
+                <Label x:Name="BackupFolderLabel"
+                       FontSize="12"
+                       TextColor="{StaticResource AppText}"
+                       LineBreakMode="WordWrap" />
+                <Button Text="Выбрать папку для копий"
+                        Clicked="OnPickBackupFolderClicked"
+                        BackgroundColor="{StaticResource Secondary}"
+                        TextColor="White"
+                        CornerRadius="10"
+                        Padding="14,10" />
+                <HorizontalStackLayout Spacing="12" VerticalOptions="Center">
+                    <Label Text="Копия при выходе из приложения"
+                           VerticalOptions="Center"
+                           FontSize="14"
+                           TextColor="{StaticResource AppText}" />
+                    <Switch x:Name="BackupAutoSwitch"
+                            VerticalOptions="Center"
+                            Toggled="OnBackupAutoToggled" />
+                </HorizontalStackLayout>
+                <Button Text="Создать копию сейчас (в выбранную папку)"
+                        Clicked="OnBackupNowClicked"
+                        BackgroundColor="{StaticResource AppSuccess}"
+                        TextColor="White"
+                        CornerRadius="10"
+                        Padding="14,10" />
+                <Button Text="Отправить копию через другое приложение…"
+                        Clicked="OnShareBackupClicked"
+                        BackgroundColor="{StaticResource AppInfo}"
+                        TextColor="White"
+                        CornerRadius="10"
+                        Padding="14,10" />
+                <Button Text="Восстановить из ZIP (заменит данные)"
+                        Clicked="OnRestoreFromZipClicked"
+                        BackgroundColor="{StaticResource AppWarning}"
+                        TextColor="White"
+                        CornerRadius="10"
+                        Padding="14,10" />
+
+                <Label Text="Активность"
+                       FontSize="18"
+                       FontAttributes="Bold"
+                       TextColor="{StaticResource AppText}" />
+
+                <Button Text="Журнал перемещений предметов"
+                        Clicked="OnMovementHistoryClicked"
+                        BackgroundColor="{StaticResource Primary}"
+                        TextColor="White"
+                        CornerRadius="10"
+                        Padding="14,10" />
+
+                <Button Text="Экспорт CSV и PDF"
+                        Clicked="OnExportClicked"
+                        BackgroundColor="{StaticResource AppInfo}"
+                        TextColor="White"
+                        CornerRadius="10"
+                        Padding="14,10" />
+
+                <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto" ColumnSpacing="10" RowSpacing="10">
+                    <Border Grid.Row="0" Grid.Column="0" Stroke="{StaticResource Gray600}" StrokeThickness="1"
+                            BackgroundColor="{StaticResource AppCard}" Padding="12" StrokeShape="RoundRectangle 10">
+                        <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
+                            <Label x:Name="TotalActionsLabel" Text="—" FontSize="22" FontAttributes="Bold"
+                                   TextColor="{StaticResource Primary}" HorizontalTextAlignment="Center" />
+                            <Label Text="Всего действий" FontSize="12" TextColor="{StaticResource AppMuted}" HorizontalTextAlignment="Center" />
+                        </VerticalStackLayout>
+                    </Border>
+                    <Border Grid.Row="0" Grid.Column="1" Stroke="{StaticResource Gray600}" StrokeThickness="1"
+                            BackgroundColor="{StaticResource AppCard}" Padding="12" StrokeShape="RoundRectangle 10">
+                        <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
+                            <Label x:Name="MovementsLabel" Text="—" FontSize="22" FontAttributes="Bold"
+                                   TextColor="{StaticResource AppSuccess}" HorizontalTextAlignment="Center" />
+                            <Label Text="Перемещений" FontSize="12" TextColor="{StaticResource AppMuted}" HorizontalTextAlignment="Center" />
+                        </VerticalStackLayout>
+                    </Border>
+                    <Border Grid.Row="1" Grid.Column="0" Stroke="{StaticResource Gray600}" StrokeThickness="1"
+                            BackgroundColor="{StaticResource AppCard}" Padding="12" StrokeShape="RoundRectangle 10">
+                        <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
+                            <Label x:Name="AddedLabel" Text="—" FontSize="22" FontAttributes="Bold"
+                                   TextColor="{StaticResource AppInfo}" HorizontalTextAlignment="Center" />
+                            <Label Text="Добавлений" FontSize="12" TextColor="{StaticResource AppMuted}" HorizontalTextAlignment="Center" />
+                        </VerticalStackLayout>
+                    </Border>
+                    <Border Grid.Row="1" Grid.Column="1" Stroke="{StaticResource Gray600}" StrokeThickness="1"
+                            BackgroundColor="{StaticResource AppCard}" Padding="12" StrokeShape="RoundRectangle 10">
+                        <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
+                            <Label x:Name="DeletedLabel" Text="—" FontSize="22" FontAttributes="Bold"
+                                   TextColor="{StaticResource AppWarning}" HorizontalTextAlignment="Center" />
+                            <Label Text="Удалений" FontSize="12" TextColor="{StaticResource AppMuted}" HorizontalTextAlignment="Center" />
+                        </VerticalStackLayout>
+                    </Border>
+                    <Border Grid.Row="2" Grid.Column="0" Stroke="{StaticResource Gray600}" StrokeThickness="1"
+                            BackgroundColor="{StaticResource AppCard}" Padding="12" StrokeShape="RoundRectangle 10">
+                        <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
+                            <Label x:Name="EditedLabel" Text="—" FontSize="22" FontAttributes="Bold"
+                                   TextColor="{StaticResource SecondaryDarkText}" HorizontalTextAlignment="Center" />
+                            <Label Text="Редактирований" FontSize="12" TextColor="{StaticResource AppMuted}" HorizontalTextAlignment="Center" />
+                        </VerticalStackLayout>
+                    </Border>
+                </Grid>
+
+                <Label Text="Создано вами"
+                       FontSize="18"
+                       FontAttributes="Bold"
+                       TextColor="{StaticResource AppText}" />
+
+                <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto" ColumnSpacing="10" RowSpacing="10">
+                    <Border Grid.Row="0" Grid.Column="0" Stroke="{StaticResource Gray600}" StrokeThickness="1"
+                            BackgroundColor="{StaticResource AppCard}" Padding="12" StrokeShape="RoundRectangle 10">
+                        <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
+                            <Label x:Name="CreatedItemsLabel" Text="—" FontSize="22" FontAttributes="Bold"
+                                   TextColor="{StaticResource Primary}" HorizontalTextAlignment="Center" />
+                            <Label Text="Предметы" FontSize="12" TextColor="{StaticResource AppMuted}" HorizontalTextAlignment="Center" />
+                        </VerticalStackLayout>
+                    </Border>
+                    <Border Grid.Row="0" Grid.Column="1" Stroke="{StaticResource Gray600}" StrokeThickness="1"
+                            BackgroundColor="{StaticResource AppCard}" Padding="12" StrokeShape="RoundRectangle 10">
+                        <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
+                            <Label x:Name="CreatedBuildingsLabel" Text="—" FontSize="22" FontAttributes="Bold"
+                                   TextColor="{StaticResource AppSuccess}" HorizontalTextAlignment="Center" />
+                            <Label Text="Строения" FontSize="12" TextColor="{StaticResource AppMuted}" HorizontalTextAlignment="Center" />
+                        </VerticalStackLayout>
+                    </Border>
+                    <Border Grid.Row="1" Grid.Column="0" Stroke="{StaticResource Gray600}" StrokeThickness="1"
+                            BackgroundColor="{StaticResource AppCard}" Padding="12" StrokeShape="RoundRectangle 10">
+                        <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
+                            <Label x:Name="CreatedRoomsLabel" Text="—" FontSize="22" FontAttributes="Bold"
+                                   TextColor="{StaticResource AppInfo}" HorizontalTextAlignment="Center" />
+                            <Label Text="Комнаты" FontSize="12" TextColor="{StaticResource AppMuted}" HorizontalTextAlignment="Center" />
+                        </VerticalStackLayout>
+                    </Border>
+                    <Border Grid.Row="1" Grid.Column="1" Stroke="{StaticResource Gray600}" StrokeThickness="1"
+                            BackgroundColor="{StaticResource AppCard}" Padding="12" StrokeShape="RoundRectangle 10">
+                        <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
+                            <Label x:Name="CreatedContainersLabel" Text="—" FontSize="22" FontAttributes="Bold"
+                                   TextColor="{StaticResource AppWarning}" HorizontalTextAlignment="Center" />
+                            <Label Text="Контейнеры" FontSize="12" TextColor="{StaticResource AppMuted}" HorizontalTextAlignment="Center" />
+                        </VerticalStackLayout>
+                    </Border>
+                    <Border Grid.Row="2" Grid.Column="0" Stroke="{StaticResource Gray600}" StrokeThickness="1"
+                            BackgroundColor="{StaticResource AppCard}" Padding="12" StrokeShape="RoundRectangle 10">
+                        <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
+                            <Label x:Name="CreatedCategoriesLabel" Text="—" FontSize="22" FontAttributes="Bold"
+                                   TextColor="{StaticResource SecondaryDarkText}" HorizontalTextAlignment="Center" />
+                            <Label Text="Категории" FontSize="12" TextColor="{StaticResource AppMuted}" HorizontalTextAlignment="Center" />
+                        </VerticalStackLayout>
+                    </Border>
+                </Grid>
+
+                <ActivityIndicator x:Name="Loading" Color="{StaticResource Primary}" IsRunning="True" IsVisible="True" />
+            </VerticalStackLayout>
+        </ScrollView>
+    </RefreshView>
+</ContentPage>

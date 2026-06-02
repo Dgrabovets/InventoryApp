@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="InventoryApp.Views.Pages.AddItemPage"
+             Title="Новый предмет"
+             BackgroundColor="{StaticResource AppBg}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="14">
+
+            <Label Style="{StaticResource SubHeadline}"
+                   FontSize="14"
+                   TextColor="{StaticResource AppMuted}"
+                   LineBreakMode="WordWrap"
+                   Text="Предмет будет привязан к выбранной комнате (этаж и строение подставятся автоматически). Категория необязательна." />
+
+            <Label Text="Комната *"
+                   FontSize="13"
+                   TextColor="{StaticResource AppMuted}" />
+            <Picker x:Name="RoomPicker"
+                    Title="Где лежит" />
+
+            <Label Text="Категория"
+                   FontSize="13"
+                   TextColor="{StaticResource AppMuted}" />
+            <Picker x:Name="CategoryPicker"
+                    Title="Необязательно" />
+
+            <Label Text="Название *"
+                   FontSize="13"
+                   TextColor="{StaticResource AppMuted}" />
+            <Entry x:Name="NameEntry"
+                   Placeholder="Например, Дрель"
+                   PlaceholderColor="{StaticResource AppMuted}" />
+
+            <Label Text="Описание"
+                   FontSize="13"
+                   TextColor="{StaticResource AppMuted}" />
+            <Editor x:Name="DescriptionEditor"
+                    AutoSize="TextChanges"
+                    MinimumHeightRequest="72"
+                    Placeholder="Необязательно"
+                    PlaceholderColor="{StaticResource AppMuted}" />
+
+            <Label Text="Количество"
+                   FontSize="13"
+                   TextColor="{StaticResource AppMuted}" />
+            <Entry x:Name="QuantityEntry"
+                   Keyboard="Numeric"
+                   Text="1" />
+
+            <ActivityIndicator x:Name="Busy"
+                               Color="{StaticResource Primary}"
+                               IsRunning="False"
+                               IsVisible="False" />
+
+            <HorizontalStackLayout Spacing="12" HorizontalOptions="Fill">
+                <Button Text="Назад"
+                        HorizontalOptions="Fill"
+                        BackgroundColor="{StaticResource Gray600}"
+                        Clicked="OnBackClicked" />
+                <Button Text="Сохранить"
+                        HorizontalOptions="Fill"
+                        Clicked="OnSaveClicked" />
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

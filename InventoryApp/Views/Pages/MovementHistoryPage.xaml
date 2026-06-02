@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:appmov="clr-namespace:InventoryApp.Application.Models.Movements;assembly=InventoryApp.Application"
+             x:Class="InventoryApp.Views.Pages.MovementHistoryPage"
+             Title="Журнал перемещений">
+
+    <Grid RowDefinitions="Auto,Auto,*" Padding="16" RowSpacing="12">
+
+        <Label Grid.Row="0"
+               Text="Последние переносы предметов между комнатами (и сброс контейнера при смене комнаты)."
+               FontSize="13"
+               TextColor="{StaticResource AppMuted}"
+               LineBreakMode="WordWrap" />
+
+        <SearchBar x:Name="SearchBar"
+                   Grid.Row="1"
+                   Placeholder="Поиск по названию предмета или пользователю…"
+                   TextChanged="OnSearchTextChanged"
+                   SearchButtonPressed="OnSearchPressed" />
+
+        <RefreshView x:Name="Refresh" Grid.Row="2" Refreshing="OnRefreshing">
+            <CollectionView x:Name="MovementsCollection"
+                            EmptyView="Пока нет записей. Переносите предметы с карточки предмета — выберите комнату и сохраните.">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="appmov:ItemMovementRowDto">
+                        <Border Stroke="{StaticResource Gray600}"
+                                StrokeThickness="1"
+                                BackgroundColor="{StaticResource AppCard}"
+                                Padding="12"
+                                Margin="0,0,0,8"
+                                StrokeShape="RoundRectangle 10">
+                            <VerticalStackLayout Spacing="6">
+                                <Label Text="{Binding ItemName}"
+                                       FontAttributes="Bold"
+                                       FontSize="16"
+                                       TextColor="{StaticResource AppText}"
+                                       LineBreakMode="TailTruncation" />
+                                <Label Text="{Binding WhenLocalText}"
+                                       FontSize="12"
+                                       TextColor="{StaticResource AppMuted}" />
+                                <Label Text="{Binding FromLine}"
+                                       FontSize="12"
+                                       TextColor="{StaticResource AppText}"
+                                       LineBreakMode="WordWrap" />
+                                <Label Text="{Binding ToLine}"
+                                       FontSize="12"
+                                       TextColor="{StaticResource AppText}"
+                                       LineBreakMode="WordWrap" />
+                                <Label Text="{Binding ByLine}"
+                                       FontSize="11"
+                                       TextColor="{StaticResource AppMuted}" />
+                            </VerticalStackLayout>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+
+        <ActivityIndicator x:Name="Loading"
+                           Grid.Row="2"
+                           Color="{StaticResource Primary}"
+                           IsRunning="False"
+                           IsVisible="False"
+                           VerticalOptions="Center"
+                           HorizontalOptions="Center" />
+    </Grid>
+</ContentPage>

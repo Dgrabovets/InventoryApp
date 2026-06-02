@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:InventoryApp.Controls"
+             x:Class="InventoryApp.Views.Pages.GraphPage"
+             Title="">
+
+    <RefreshView x:Name="Refresh" Refreshing="OnRefreshing">
+        <ScrollView>
+            <VerticalStackLayout Padding="20" Spacing="16">
+
+                <Label Text="Граф инвентаря"
+                       Style="{StaticResource Headline}"
+                       FontSize="24"
+                       HorizontalTextAlignment="Center" />
+                <Label Text="SkiaSharp: пан, щипок, колёсико; касание — выбор; долгое нажатие или ПКМ — меню; подсветка связной компоненты от выбранного узла."
+                       Style="{StaticResource SubHeadline}"
+                       FontSize="14"
+                       HorizontalTextAlignment="Center"
+                       LineHeight="1.35" />
+
+                <Label Text="Тип узлов на холсте"
+                       FontSize="13"
+                       TextColor="{StaticResource AppMuted}" />
+                <Picker x:Name="TypeFilterPicker"
+                        Title="Показать тип"
+                        SelectedIndexChanged="OnTypeFilterChanged" />
+
+                <Label Text="Фильтр предметов (название, описание, заметки)"
+                       FontSize="13"
+                       TextColor="{StaticResource AppMuted}" />
+                <SearchBar x:Name="SearchBar"
+                           Placeholder="Поиск…"
+                           TextChanged="OnSearchTextChanged"
+                           SearchButtonPressed="OnSearchPressed" />
+
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                    <Border Stroke="{StaticResource Gray600}" StrokeThickness="1"
+                            BackgroundColor="{StaticResource AppCard}" Padding="14"
+                            StrokeShape="RoundRectangle 12">
+                        <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
+                            <Label x:Name="NodesCountLabel" Text="—" FontSize="26" FontAttributes="Bold"
+                                   TextColor="{StaticResource Primary}" HorizontalTextAlignment="Center" />
+                            <Label Text="Узлов" FontSize="12" TextColor="{StaticResource AppMuted}" HorizontalTextAlignment="Center" />
+                        </VerticalStackLayout>
+                    </Border>
+                    <Border Grid.Column="1"
+                            Stroke="{StaticResource Gray600}" StrokeThickness="1"
+                            BackgroundColor="{StaticResource AppCard}" Padding="14"
+                            StrokeShape="RoundRectangle 12">
+                        <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
+                            <Label x:Name="LinksCountLabel" Text="—" FontSize="26" FontAttributes="Bold"
+                                   TextColor="{StaticResource AppSuccess}" HorizontalTextAlignment="Center" />
+                            <Label Text="Связей" FontSize="12" TextColor="{StaticResource AppMuted}" HorizontalTextAlignment="Center" />
+                        </VerticalStackLayout>
+                    </Border>
+                </Grid>
+
+                <Border Stroke="{StaticResource Gray600}" StrokeThickness="1"
+                        BackgroundColor="{StaticResource AppCard}"
+                        StrokeShape="RoundRectangle 12"
+                        Padding="12"
+                        MinimumHeightRequest="460">
+                    <Grid RowDefinitions="Auto,*" RowSpacing="10">
+                        <HorizontalStackLayout Grid.Row="0" Spacing="8" HorizontalOptions="Center">
+                            <Button Text="＋" WidthRequest="48" Clicked="OnZoomInClicked" SemanticProperties.Description="Увеличить" />
+                            <Button Text="－" WidthRequest="48" Clicked="OnZoomOutClicked" SemanticProperties.Description="Уменьшить" />
+                            <Button Text="Сброс вида" Clicked="OnResetViewClicked" />
+                        </HorizontalStackLayout>
+                        <controls:InventoryGraphSkiaView x:Name="GraphCanvas"
+                                                      Grid.Row="1"
+                                                      VerticalOptions="Fill"
+                                                      MinimumHeightRequest="400"
+                                                      BackgroundColor="{StaticResource AppBg}" />
+                    </Grid>
+                </Border>
+
+                <Label x:Name="SelectionLabel"
+                       FontSize="13"
+                       TextColor="{StaticResource AppMuted}"
+                       LineBreakMode="WordWrap"
+                       Text="Узел не выбран. Коснитесь круга на графе." />
+
+                <Label Text="Сведения об узле"
+                       FontSize="13"
+                       TextColor="{StaticResource AppMuted}" />
+                <Border Stroke="{StaticResource Gray600}" StrokeThickness="1"
+                        BackgroundColor="{StaticResource AppCard}"
+                        StrokeShape="RoundRectangle 12"
+                        Padding="10">
+                    <Editor x:Name="NodeDetailEditor"
+                            IsReadOnly="True"
+                            AutoSize="TextChanges"
+                            MinimumHeightRequest="120"
+                            FontSize="12"
+                            TextColor="{StaticResource Gray200}"
+                            Placeholder="Выберите узел на графе."
+                            PlaceholderColor="{StaticResource AppMuted}" />
+                </Border>
+
+                <ActivityIndicator x:Name="Loading" Color="{StaticResource Primary}" IsRunning="False" IsVisible="False" />
+            </VerticalStackLayout>
+        </ScrollView>
+    </RefreshView>
+</ContentPage>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="InventoryApp.Views.Pages.ExportPage"
+             Title="Экспорт">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="14">
+
+            <Label Text="Выгрузка в CSV и PDF"
+                   Style="{StaticResource Headline}"
+                   FontSize="22" />
+            <Label Text="Укажите, что выгружать: весь инвентарь или только предметы в выбранном контейнере (включая отделения внутри него). Затем поделитесь файлом — сохраните в «Загрузки», облако или отправьте."
+                   FontSize="13"
+                   TextColor="{StaticResource AppMuted}"
+                   LineBreakMode="WordWrap" />
+
+            <Label Text="Область"
+                   FontAttributes="Bold"
+                   TextColor="{StaticResource AppText}" />
+            <Picker x:Name="ScopePicker"
+                    Title="Что выгружать"
+                    SelectedIndexChanged="OnScopeChanged" />
+
+            <Label x:Name="ContainerSectionTitle"
+                   Text="Контейнер"
+                   FontAttributes="Bold"
+                   TextColor="{StaticResource AppText}"
+                   IsVisible="False" />
+            <Picker x:Name="ContainerPicker"
+                    Title="Выберите контейнер"
+                    IsVisible="False" />
+
+            <Button Text="Сохранить CSV (Excel)"
+                    Clicked="OnExportCsvClicked"
+                    BackgroundColor="{StaticResource AppInfo}"
+                    TextColor="White"
+                    CornerRadius="10"
+                    Padding="14,10" />
+
+            <Button Text="Сохранить PDF"
+                    Clicked="OnExportPdfClicked"
+                    BackgroundColor="{StaticResource Primary}"
+                    TextColor="White"
+                    CornerRadius="10"
+                    Padding="14,10" />
+
+            <ActivityIndicator x:Name="Busy"
+                               Color="{StaticResource Primary}"
+                               IsRunning="False"
+                               IsVisible="False" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

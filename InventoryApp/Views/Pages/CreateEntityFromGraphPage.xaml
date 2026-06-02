@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="InventoryApp.Views.Pages.CreateEntityFromGraphPage"
+             Title="Новая запись"
+             BackgroundColor="{StaticResource AppBg}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="14">
+
+            <Label x:Name="ContextLabel"
+                   Style="{StaticResource SubHeadline}"
+                   FontSize="14"
+                   TextColor="{StaticResource AppMuted}"
+                   LineBreakMode="WordWrap" />
+
+            <Label Text="Тип записи"
+                   FontSize="13"
+                   TextColor="{StaticResource AppMuted}" />
+            <Picker x:Name="KindPicker"
+                    Title="Выберите тип"
+                    SelectedIndexChanged="OnKindChanged" />
+
+            <VerticalStackLayout x:Name="ContainerTypePanel" IsVisible="False" Spacing="6">
+                <Label Text="Тип контейнера"
+                       FontSize="13"
+                       TextColor="{StaticResource AppMuted}" />
+                <Picker x:Name="ContainerTypePicker"
+                        Title="Тип из справочника" />
+            </VerticalStackLayout>
+
+            <Label Text="Название *"
+                   FontSize="13"
+                   TextColor="{StaticResource AppMuted}" />
+            <Entry x:Name="NameEntry"
+                   Placeholder="Обязательное поле"
+                   PlaceholderColor="{StaticResource AppMuted}" />
+
+            <Label Text="Описание"
+                   FontSize="13"
+                   TextColor="{StaticResource AppMuted}" />
+            <Editor x:Name="DescriptionEditor"
+                    AutoSize="TextChanges"
+                    MinimumHeightRequest="72"
+                    Placeholder="Необязательно"
+                    PlaceholderColor="{StaticResource AppMuted}" />
+
+            <VerticalStackLayout x:Name="LevelPanel" IsVisible="False" Spacing="6">
+                <Label Text="Номер этажа (уровень)"
+                       FontSize="13"
+                       TextColor="{StaticResource AppMuted}" />
+                <Entry x:Name="LevelEntry"
+                       Keyboard="Numeric"
+                       Placeholder="Например, 1"
+                       Text="1" />
+            </VerticalStackLayout>
+
+            <VerticalStackLayout x:Name="QuantityPanel" IsVisible="False" Spacing="6">
+                <Label Text="Количество"
+                       FontSize="13"
+                       TextColor="{StaticResource AppMuted}" />
+                <Entry x:Name="QuantityEntry"
+                       Keyboard="Numeric"
+                       Text="1" />
+            </VerticalStackLayout>
+
+            <ActivityIndicator x:Name="Busy"
+                               Color="{StaticResource Primary}"
+                               IsRunning="False"
+                               IsVisible="False" />
+
+            <HorizontalStackLayout Spacing="12" HorizontalOptions="Fill">
+                <Button Text="Отмена"
+                        HorizontalOptions="Fill"
+                        BackgroundColor="{StaticResource Gray600}"
+                        Clicked="OnCancelClicked" />
+                <Button Text="Сохранить"
+                        HorizontalOptions="Fill"
+                        Clicked="OnSaveClicked" />
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

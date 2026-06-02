@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:appitems="clr-namespace:InventoryApp.Application.Models.Items;assembly=InventoryApp.Application"
+             xmlns:conv="clr-namespace:InventoryApp.Converters"
+             x:Class="InventoryApp.Views.Pages.ItemsListPage"
+             Title="Предметы">
+
+    <ContentPage.Resources>
+        <conv:FilePathToImageSourceConverter x:Key="FilePathImage" />
+        <conv:StringNotEmptyToBoolConverter x:Key="HasThumbPath" />
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="Auto,*" Padding="16" RowSpacing="12">
+
+        <SearchBar x:Name="SearchBar"
+                   Grid.Row="0"
+                   Placeholder="Поиск по названию, описанию, заметкам…"
+                   TextChanged="OnSearchTextChanged"
+                   SearchButtonPressed="OnSearchPressed" />
+
+        <RefreshView x:Name="Refresh" Grid.Row="1" Refreshing="OnRefreshing">
+            <CollectionView x:Name="ItemsCollection"
+                            SelectionMode="Single"
+                            SelectionChanged="OnItemSelected"
+                            EmptyView="Нет предметов. Добавьте через «Главная» или граф.">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="appitems:ItemListRowDto">
+                        <Border Stroke="{StaticResource Gray600}"
+                                StrokeThickness="1"
+                                BackgroundColor="{StaticResource AppCard}"
+                                Padding="12"
+                                Margin="0,0,0,8"
+                                StrokeShape="RoundRectangle 10">
+                            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12" RowDefinitions="Auto,Auto">
+                                <Border Grid.RowSpan="2"
+                                        Grid.Column="0"
+                                        Stroke="{StaticResource Gray600}"
+                                        StrokeThickness="1"
+                                        Padding="0"
+                                        WidthRequest="56"
+                                        HeightRequest="56"
+                                        VerticalOptions="Start"
+                                        IsVisible="{Binding ListThumbnailFilePath, Converter={StaticResource HasThumbPath}}"
+                                        StrokeShape="RoundRectangle 8">
+                                    <Image Aspect="AspectFill"
+                                           Source="{Binding ListThumbnailFilePath, Converter={StaticResource FilePathImage}}" />
+                                </Border>
+                                <Grid Grid.Row="0"
+                                      Grid.Column="1"
+                                      ColumnDefinitions="*,Auto"
+                                      ColumnSpacing="8">
+                                    <Label Grid.Column="0"
+                                           Text="{Binding Name}"
+                                           FontAttributes="Bold"
+                                           FontSize="16"
+                                           TextColor="{StaticResource AppText}"
+                                           LineBreakMode="TailTruncation" />
+                                    <Label Grid.Column="1"
+                                           Text="{Binding Quantity, StringFormat='×{0}'}"
+                                           FontSize="15"
+                                           TextColor="{StaticResource Primary}" />
+                                </Grid>
+                                <Label Grid.Row="1"
+                                       Grid.Column="1"
+                                       Text="{Binding SubtitleLine}"
+                                       FontSize="12"
+                                       TextColor="{StaticResource AppMuted}"
+                                       LineBreakMode="TailTruncation"
+                                       MaxLines="2" />
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+
+        <ActivityIndicator x:Name="Loading"
+                           Grid.Row="1"
+                           Color="{StaticResource Primary}"
+                           IsRunning="False"
+                           IsVisible="False"
+                           VerticalOptions="Center"
+                           HorizontalOptions="Center" />
+    </Grid>
+</ContentPage>
