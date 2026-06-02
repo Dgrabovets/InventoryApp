@@ -75,9 +75,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\src\InventoryApp.Domain\InventoryApp.Domain.csproj" />
-	  <ProjectReference Include="..\src\InventoryApp.Application\InventoryApp.Application.csproj" />
-	  <ProjectReference Include="..\src\InventoryApp.Infrastructure\InventoryApp.Infrastructure.csproj" />
+	  <ProjectReference Include="..\InventoryApp.Domain\InventoryApp.Domain.csproj" />
+	  <ProjectReference Include="..\InventoryApp.Application\InventoryApp.Application.csproj" />
+	  <ProjectReference Include="..\InventoryApp.Infrastructure\InventoryApp.Infrastructure.csproj" />
 	</ItemGroup>
 
 </Project>
