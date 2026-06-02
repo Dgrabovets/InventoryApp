@@ -36,8 +36,8 @@
 		<ApplicationId>com.companyname.inventoryapp</ApplicationId>
 
 		<!-- Versions -->
-		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
-		<ApplicationVersion>1</ApplicationVersion>
+		<ApplicationDisplayVersion>0.0.2</ApplicationDisplayVersion>
+		<ApplicationVersion>0.0.2</ApplicationVersion>
 
 		<!-- To develop, package, and publish an app to the Microsoft Store, see: https://aka.ms/MauiTemplateUnpackaged -->
 		<WindowsPackageType>None</WindowsPackageType>
@@ -75,9 +75,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\src\InventoryApp.Domain\InventoryApp.Domain.csproj" />
-	  <ProjectReference Include="..\src\InventoryApp.Application\InventoryApp.Application.csproj" />
-	  <ProjectReference Include="..\src\InventoryApp.Infrastructure\InventoryApp.Infrastructure.csproj" />
+	  <ProjectReference Include="..\InventoryApp.Domain\InventoryApp.Domain.csproj" />
+	  <ProjectReference Include="..\InventoryApp.Application\InventoryApp.Application.csproj" />
+	  <ProjectReference Include="..\InventoryApp.Infrastructure\InventoryApp.Infrastructure.csproj" />
 	</ItemGroup>
 
 </Project>
